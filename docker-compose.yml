@@ -1,0 +1,24 @@
+services:
+  grok-webui:
+    build: .
+    container_name: grok-webui
+    restart: unless-stopped
+    ports:
+      - "${WEBUI_PORT:-8080}:8080"
+    environment:
+      GROK_API_KEY: "${GROK_API_KEY:-}"
+      GROK_MODEL: "${GROK_MODEL:-grok-4-1-fast-reasoning}"
+      DB_PATH: "${DB_PATH:-/data/mem.db}"
+      ARCHIVE_PATH: "${ARCHIVE_PATH:-/data/archive.jsonl}"
+      MAX_BYTES: "${MAX_BYTES:-5GB}"
+      PSY_DEBUG: "${PSY_DEBUG:-1}"
+      NM_USER: "${NM_USER:-ahui69}"
+      NM_PROJECT: "${NM_PROJECT:-grok}"
+      PROMOT_PATH: "${PROMOT_PATH:-/app/promot.py}"
+      PROMPT_FILE: "${PROMPT_FILE:-/app/prompt.py}"
+      PROMPT_TEXT: "${PROMPT_TEXT:-}"
+      PROMPT_ALLOW_ENV_OVERRIDE: "${PROMPT_ALLOW_ENV_OVERRIDE:-1}"
+      PROMPT_RELOAD_SEC: "${PROMPT_RELOAD_SEC:-0}"
+      PROMPT_MAX_CHARS: "${PROMPT_MAX_CHARS:-250000}"
+    volumes:
+      - ./data:/data

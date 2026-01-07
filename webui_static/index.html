@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grok Memory WebUI</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="orb orb--a"></div>
+    <div class="orb orb--b"></div>
+
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <h1>Grok Memory</h1>
+          <span class="pill">webui</span>
+        </div>
+
+        <div class="status">
+          <span id="statusDot" class="dot"></span>
+          <span id="statusText">Łączenie...</span>
+        </div>
+
+        <button id="newSession">Nowa sesja</button>
+
+        <div class="field">
+          <label for="userName">Użytkownik</label>
+          <input id="userName" type="text" placeholder="np. ahui69" />
+        </div>
+
+        <div class="field">
+          <label for="projectName">Projekt</label>
+          <input id="projectName" type="text" placeholder="np. grok" />
+        </div>
+
+        <button id="uploadBtn" class="secondary">Dodaj plik</button>
+        <input id="fileInput" type="file" />
+
+        <div class="section">
+          <h3>Sesje</h3>
+          <div id="sessions" class="list"></div>
+        </div>
+
+        <div class="section">
+          <h3>Pliki</h3>
+          <div id="attachments" class="list"></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <h2 id="sessionTitle">Aktywna sesja</h2>
+          <div id="healthInfo" class="health"></div>
+        </div>
+
+        <section id="chat" class="chat"></section>
+
+        <div class="composer">
+          <textarea
+            id="messageInput"
+            placeholder="Napisz wiadomość i wciśnij Enter..."
+          ></textarea>
+          <button id="sendBtn">Wyślij</button>
+          <button id="clearBtn" class="secondary">Wyczyść</button>
+        </div>
+
+        <div class="footer-note">
+          Enter wysyła, Shift+Enter robi nową linię. Pliki trafiają do pamięci jako
+          treść z metadanymi.
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

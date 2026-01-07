@@ -28,6 +28,7 @@ Zależności:
 ENV:
 - GROK_API_KEY    (opcjonalne — wymagane, jeśli chcesz w CLI dzwonić do Grok)
 - DB_PATH         (domyślnie: ./data/neural_memory.sqlite)
+- ARCHIVE_PATH    (domyślnie: ./data/archive.jsonl)
 - MAX_BYTES       (domyślnie: 5GB; akceptuje np. "512MB", "5GB")
 - PSY_DEBUG       (1 -> DEBUG logi, inaczej INFO)
 - NM_ENSURE_DEPS  (1 -> CLI spróbuje doinstalować opcjonalne paczki pipem; 0 -> nie rusza pip)
@@ -92,6 +93,7 @@ except Exception as e:
 DEFAULT_MAX_BYTES = 5 * 1024 * 1024 * 1024  # 5GB
 ENV_GROK_API_KEY = "GROK_API_KEY"
 ENV_DB_PATH = "DB_PATH"
+ENV_ARCHIVE_PATH = "ARCHIVE_PATH"
 ENV_MAX_BYTES = "MAX_BYTES"
 ENV_PSY_DEBUG = "PSY_DEBUG"
 ENV_ENSURE_DEPS = "NM_ENSURE_DEPS"
@@ -1167,19 +1169,40 @@ class AssociativeGraph:
 
 
 class NeuralMemory:
-    def __init__(self, deps: OptionalDeps) -> None:
-        self.deps = deps
-
+    def __init__(self, deps: Optional[OptionalDeps] = None) -> None:
         self.base_dir = Path(__file__).resolve().parent
-        self.data_dir = self.base_dir / "data"
+
+        db_env = os.getenv(ENV_DB_PATH, "").strip()
+        if db_env:
+            db_path = Path(db_env).expanduser()
+            if not db_path.is_absolute():
+                db_path = (Path.cwd() / db_path).resolve()
+            self.data_dir = db_path.parent
+        else:
+            self.data_dir = (self.base_dir / "data").resolve()
+            db_path = (self.data_dir / "neural_memory.sqlite").resolve()
+
+        archive_env = os.getenv(ENV_ARCHIVE_PATH, "").strip()
+        if archive_env:
+            archive_path = Path(archive_env).expanduser()
+            if not archive_path.is_absolute():
+                archive_path = (self.data_dir / archive_path).resolve()
+        else:
+            archive_path = self.data_dir / "archive.jsonl"
+
         self.logs_dir = self.data_dir / "logs"
         self.logs_dir.mkdir(parents=True, exist_ok=True)
 
-        self.max_bytes = _env_bytes(ENV_MAX_BYTES, DEFAULT_MAX_BYTES)
-        db_path = Path(os.getenv(ENV_DB_PATH, str(self.data_dir / "neural_memory.sqlite"))).expanduser().resolve()
-        archive_path = self.data_dir / "archive.jsonl"
-
         self.log = self._init_logging()
+
+        if deps is None:
+            deps = OptionalDeps(log=self.log)
+            env_flag = os.getenv(ENV_ENSURE_DEPS, "").strip()
+            ensure = True if env_flag == "" else (env_flag == "1")
+            deps.ensure(do_install=ensure)
+        self.deps = deps
+
+        self.max_bytes = _env_bytes(ENV_MAX_BYTES, DEFAULT_MAX_BYTES)
         self.metastore = MetaStore(db_path=db_path, archive_path=archive_path, max_bytes=self.max_bytes, log=self.log)
 
         self.enricher = Enricher()

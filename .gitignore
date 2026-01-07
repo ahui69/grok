@@ -1,8 +1,26 @@
-
 .env
+*.env
+*.sqlite
+*.sqlite3
+*.db
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/logs/
+*.log
 
-.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
 
-.env
+node_modules/
+open-webui/**/node_modules/
+open-webui/**/.next/
+open-webui/**/dist/
+open-webui/**/build/
 
-.env
+.DS_Store

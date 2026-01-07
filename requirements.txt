@@ -1,0 +1,9 @@
+fastapi==0.115.6
+uvicorn[standard]==0.30.6
+pydantic==2.10.3
+python-multipart==0.0.12
+httpx==0.28.1
+networkx==3.4.2
+python-louvain==0.16
+numpy==2.2.6
+faiss-cpu==1.13.2
