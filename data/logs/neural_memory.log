@@ -1,0 +1,17 @@
+2026-01-06 23:50:21,865 INFO neural_memory :: FAISS rebuilt: 0 vectors.
+2026-01-06 23:50:21,866 INFO neural_memory :: FAISS vector index initialized (dim=3072).
+2026-01-06 23:50:21,866 INFO neural_memory :: Graph loaded: nodes=0 edges=0
+2026-01-06 23:50:21,867 INFO neural_memory :: Seeded Core Persona (L4). mem_id=1
+2026-01-06 23:50:21,867 INFO neural_memory :: NeuralMemory background loops started.
+2026-01-06 23:54:30,109 ERROR neural_memory :: Grok httpx chat failed: Client error '400 Bad Request' for url 'https://api.x.ai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-01-06 23:54:35,329 ERROR neural_memory :: Grok httpx chat failed: Client error '400 Bad Request' for url 'https://api.x.ai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-01-06 23:54:38,429 INFO neural_memory :: NeuralMemory stopped.
+2026-01-06 23:56:39,458 INFO neural_memory :: FAISS rebuilt: 2 vectors.
+2026-01-06 23:56:39,458 INFO neural_memory :: FAISS vector index initialized (dim=3072).
+2026-01-06 23:56:39,458 INFO neural_memory :: Graph loaded: nodes=2 edges=3
+2026-01-06 23:56:39,458 INFO neural_memory :: NeuralMemory background loops started.
+2026-01-06 23:58:43,105 ERROR neural_memory :: Grok httpx chat failed: Client error '400 Bad Request' for url 'https://api.x.ai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-01-07 00:03:02,950 INFO neural_memory :: NeuralMemory stopped.
